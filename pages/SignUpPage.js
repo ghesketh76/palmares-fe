@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native'
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 
 
-export default function SignUpPage() {
+export default function SignUpPage(props) {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -13,7 +13,8 @@ export default function SignUpPage() {
     const [age, setAge] = useState('')
 
     const handlePress = () => {
-        console.log({username, password})
+       let user = ({username, password, first_name, last_name, email, age})
+       props.signUp(user)
     }
     return (
         <View style={styles.container}>
@@ -66,8 +67,10 @@ export default function SignUpPage() {
                     onChangeText={age => setAge(age)}
                 />
             </View>
-            <Button title="Create a new Account" onPress={handlePress}/>
-
+            {/* <Button title="Create a new Account" onPress={handlePress}/> */}
+            <TouchableOpacity style={styles.loginBtn} onPress={handlePress}>
+                <Text style={styles.loginText}>Create a New Account</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -100,6 +103,16 @@ const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 50,
         fontSize: 30,
-    }
+    },
+    loginBtn: {
+        width: "80%",
+        borderRadius: 25,
+        height: 50,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 40,
+        backgroundColor: "#FF1493",
+    },
+
 
 })
