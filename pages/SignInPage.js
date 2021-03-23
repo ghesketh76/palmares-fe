@@ -1,16 +1,20 @@
 import React, {useState} from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function SignInPage(props) {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handlePress = (event) => {
-       let user = ({
-           username, password
-       })
-       props.login(user)
+    const loginURL = 'https://palmares-be.herokuapp.com/login'
+
+    
+
+
+    const handleLogin = () => {
+        props.login({username, password})
     }
 
     return (
@@ -29,14 +33,14 @@ export default function SignInPage(props) {
                     onChangeText={password => setPassword(password)}
                 />
             </View>
-            <TouchableOpacity style={styles.loginBtn} onPress={handlePress}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
             {props.errors 
                 ? <Text>{props.errors}</Text>
                 : null
             }
-
+            <Button title="I Need to Make a New Account" onPress={() => props.navigation.navigate('Create a New Account')}/>
         </View>
     )
 }

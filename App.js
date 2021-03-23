@@ -1,28 +1,85 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import reducers from './reducers'
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import HomePage from './pages/HomePage';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack'
 
 
 const usersURL = 'https://palmares-be.herokuapp.com/users'
 const loginURL = 'https://palmares-be.herokuapp.com/login'
+const profileURL = 'https://palmares-be.herokuapp.com/profile'
+
+
+const Stack = createStackNavigator()
 
 
 export default function App() {
 
   const [errors, setErrors] = useState([])
+  const [authToken, setAuthToken] = useState('')
+  const [refreshToken, setRefreshToken] = useState('')
   const [user, setUser] = useState({})
-  const [auhtToken, setAuthToken] = useState({})
   
-  const login = ({username, password}) => {
+  useEffect(() => getData(), [])
+  
+  const getData = async () => {
+    try{
+      const value = await AsyncStorage.getItem('token')
+      if(value !== null){
+        authorizeUSer(value)
+      }
+    } catch(e){
+      console.log(e)
+    }
+  }
+
+  const authorizeUSer = (token) => {
+    fetch(profileURL, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }).then(response => response.json())
+      .then(data => {
+        setUser(data.user)
+        setRefreshToken(data.refresh_token.refresh_token)
+      })
+      
+  }
+
+  const signUp = () => {
+    fetch(usersURL, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({user: {username, password, first_name, last_name, email, age}})
+    })
+      .then(response => response.json())
+      .then(data => {
+        if(data.errors){
+            setErrors(data.errors)
+        } else {
+          AsyncStorage.setItem('token', data.token)
+          setAuthToken(data.token)
+          setUser(data.user)
+      }
+    })
+  }
+
+  const login = (user) => {
     fetch(loginURL, {
       method: "POST",
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({username, password})
+      body: JSON.stringify(user)
     }).then(response => response.json())
       .then(data => {
         if(data.errors){
@@ -30,52 +87,43 @@ export default function App() {
         } else {
           AsyncStorage.setItem('token', data.token)
           setUser(data.user)
-          setAuthToken(data.token)  // is this the best way to do this? Secure store?
+          setAuthToken(data.token)
+          setRefreshToken(data.refresh_token.refresh_token)
         }
       })
   }
 
-  const signUp = (user) => {
-    fetch(usersURL, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({user})
-    })
-      .then(response => response.json())
-      .then(data => {
-        if(data.errors){
-          setErrors(data.errors)
-        } else {
-          AsyncStorage.setItem('token', data.token)
-          setUser(data.user)
-          setAuthToken(data.token)  // is this the best way to do this? Secure store?
-        }
-      })
-  }
 
-  const consolePress = () => {
-    console.log('user', user)
-    // console.log('token', AsyncStorage.getItem('token'))
-    AsyncStorage.getItem('token')
-      .then(token => console.log('async token' ,token))
-    console.log('state token', auhtToken)
-  }
+  // authorizeUSer()
 
   const logOut = () => {
     AsyncStorage.removeItem('token')
     setUser('')
-    setAuthToken('')
+    setRefreshToken('')
+    setActivites('')
   }
 
+
   return (
-    <View style={styles.container}>
-      <SignUpPage signUp={signUp}/>
-      {/* <SignInPage login={login} errors={errors}/> */}
-      <Button style={styles.consoleButton} onPress={consolePress}title="consolelog"/>
-      <Button style={styles.consoleButton} onPress={logOut} title="logout"/>
-    </View>
+
+    <NavigationContainer>
+      <Stack.Navigator>
+      {user.id
+        ? (<Stack.Screen name="HomePage">
+              {() => <HomePage logOut={logOut} refreshToken={refreshToken}/>}
+            </Stack.Screen>)
+        : (<> 
+          <Stack.Screen name="Sign In">
+            {() => <SignInPage login={login} errors={errors}/>}
+          </Stack.Screen>
+          <Stack.Screen name="Create a New Account">
+            {() => <SignUpPage signUp={signUp} errors={errors} navigation={navigation}/>}
+          </Stack.Screen> 
+          </>)
+      }
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 

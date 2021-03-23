@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function SignUpPage(props) {
+export default function SignUpPage(props) {  
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -12,10 +13,13 @@ export default function SignUpPage(props) {
     const [email, setEmail] = useState('')
     const [age, setAge] = useState('')
 
-    const handlePress = () => {
-       let user = ({username, password, first_name, last_name, email, age})
-       props.signUp(user)
+
+   
+
+    const handleSignUp = () => {
+        props.signUp({user: {username, password, first_name, last_name, email, age}})
     }
+
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Create a New Account</Text>
@@ -67,10 +71,15 @@ export default function SignUpPage(props) {
                     onChangeText={age => setAge(age)}
                 />
             </View>
-            {/* <Button title="Create a new Account" onPress={handlePress}/> */}
-            <TouchableOpacity style={styles.loginBtn} onPress={handlePress}>
+            {props.errors 
+                ? <Text>{props.errors}</Text>
+                : null
+            }
+            
+            <TouchableOpacity style={styles.loginBtn} onPress={handleSignUp}>
                 <Text style={styles.loginText}>Create a New Account</Text>
             </TouchableOpacity>
+            <Button title="I already have an account" onPress={() => props.navigation.navigate('Sign In')}/>
         </View>
     )
 }
