@@ -27,20 +27,17 @@ export default function App() {
   const [refreshToken, setRefreshToken] = useState('')
   const [user, setUser] = useState({})
   
-  useEffect(() => getData(), [])
-  
   const getData = async () => {
     try{
       const value = await AsyncStorage.getItem('token')
       if(value !== null){
-        authorizeUSer(value)
+        authorizeUser(value)
       }
     } catch(e){
       console.log(e)
     }
   }
-
-  const authorizeUSer = (token) => {
+  const authorizeUser = (token) => {
     fetch(profileURL, {
       headers: {
         "Authorization": `Bearer ${token}`
@@ -52,6 +49,13 @@ export default function App() {
       })
       
   }
+  useEffect(() => {
+    getData()
+  },[])
+  
+  
+  
+
 
   const signUp = () => {
     fetch(usersURL, {
@@ -100,7 +104,7 @@ export default function App() {
     AsyncStorage.removeItem('token')
     setUser('')
     setRefreshToken('')
-    setActivites('')
+ 
   }
 
 
