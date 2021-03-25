@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
 import StravaActivities from '../components/StravaActivities'
-import StravaCard from '../components/StravaCard'
 import DailyCard from '../components/DailyCard'
+import DailyGoal from '../components/DailyGoal'
+
 
 
 
@@ -15,8 +16,7 @@ export default function HomePage(props) {
     
     const [activities, setActivities] = useState([])
     const [dailyGoal, setDailyGoal] = useState({})
-    const [todaysActivity, setTodaysActivity] = useState({})
-    
+    const [goalAchieved, setGoalAchieved] = useState(false)
 
     useEffect(() => {
         fetch(refreshURL, {
@@ -32,57 +32,31 @@ export default function HomePage(props) {
             !data.errors && setActivities(data) 
             })
     }
-    
-   
-    const makeCards = () => {
-       return activities.map(activity => <StravaCard activity={activity} key={activity.id}/>)
+
+    const createDailyGoal = (goal) => {
+        setDailyGoal(goal)
     }
 
-    const today = new Date()
-    const dateToday = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, "0")+'-'+today.getDate().toString().padStart(2, "0")
-    
-    const todayActivity = () => {
-        const workout = activities.find(activity => activity.start_date_local.slice(0,10) === dateToday) 
-        setTodaysActivity(workout)
-    }
-
-    // todayActivity()
-    // Need to figure out how to run this, or do i put it on the daily card component?
     
 
     return (
         <View style={styles.homePageContainer}>
             <Button title="Logout" onPress={props.logOut}/>
-            <View style={styles.goalContainer}>
-                <Text>Daily Goal</Text>
-            </View>
+            <DailyGoal dailyGoal={dailyGoal} createDailyGoal={createDailyGoal}/>
             <View>
                 <Text>Todays Activity:</Text>
-                <Button title="Get Todays Activity" onPress={todayActivity}/>
+                <DailyCard activities={activities}/>
+                
             </View>
             <Text>Past Activity</Text>
-            <ScrollView horizontal={true} style={styles.activityContainer}>
-                
-                {makeCards()}
-            </ScrollView>
+            <StravaActivities activities={activities}/>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    goalContainer: {
-        flex: 1,
-        height: 200,
-        backgroundColor: 'blue'
-    },
-    activityContainer: {
-        flex: 1,
-        width: '100%',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignContent: 'center'
-    },
     homePageContainer: {
         flex: 1
-    }
+    },
+
 })
