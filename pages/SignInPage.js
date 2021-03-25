@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function SignInPage(props) {
@@ -9,10 +8,7 @@ export default function SignInPage(props) {
     const [password, setPassword] = useState('')
 
     const loginURL = 'https://palmares-be.herokuapp.com/login'
-
-    
-
-
+ 
     const handleLogin = () => {
         props.login({username, password})
     }
@@ -24,6 +20,7 @@ export default function SignInPage(props) {
                     style={styles.inputView}
                     placeholder="Username"
                     onChangeText={username => setUsername(username)}
+                    autoCapitalize='none'
                 />
             </View>
             <View style={styles.inputView}>
@@ -41,7 +38,7 @@ export default function SignInPage(props) {
                 ? <Text>{props.errors}</Text>
                 : null
             }
-            <Button title="I Need to Make a New Account" onPress={() => props.navigation.navigate('Create a New Account')}/>
+            <Button title="I Need to Make a New Account" onPress={() => props.setLoginToggle(false)}/>
         </View>
     )
 }

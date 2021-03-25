@@ -1,24 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { Provider, useDispatch, useSelector } from 'react-redux'
-import reducers from './reducers'
+import React, { useState, useEffect } from 'react';
+import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomePage from './pages/HomePage';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack'
+
 
 
 const usersURL = 'https://palmares-be.herokuapp.com/users'
 const loginURL = 'https://palmares-be.herokuapp.com/login'
 const profileURL = 'https://palmares-be.herokuapp.com/profile'
-
-
-const Stack = createStackNavigator()
-
 
 export default function App() {
 
@@ -26,6 +18,7 @@ export default function App() {
   const [authToken, setAuthToken] = useState('')
   const [refreshToken, setRefreshToken] = useState('')
   const [user, setUser] = useState({})
+  const [loginToggle, setLoginToggle] = useState(true)
   
   const getData = async () => {
     try{
@@ -37,6 +30,7 @@ export default function App() {
       console.log(e)
     }
   }
+
   const authorizeUser = (token) => {
     fetch(profileURL, {
       headers: {
@@ -49,14 +43,11 @@ export default function App() {
       })
       
   }
+
   useEffect(() => {
     getData()
   },[])
   
-  
-  
-
-
   const signUp = () => {
     fetch(usersURL, {
       method: 'POST',
@@ -97,38 +88,40 @@ export default function App() {
       })
   }
 
-
-  // authorizeUSer()
-
   const logOut = () => {
     AsyncStorage.removeItem('token')
     setUser('')
     setRefreshToken('')
- 
   }
 
 
-  return (
+   if(user.id){
+    return <HomePage logOut={logOut} refreshToken={refreshToken}/>
+   } else if (loginToggle){
+     return <SignInPage login={login} errors={errors} setLoginToggle={setLoginToggle}/>
+   } else {
+      return <SignUpPage signUp={signUp} errors={errors} setLoginToggle={setLoginToggle}/>
+   }
+  
 
-    <NavigationContainer>
-      <Stack.Navigator>
-      {user.id
-        ? (<Stack.Screen name="HomePage">
-              {() => <HomePage logOut={logOut} refreshToken={refreshToken}/>}
-            </Stack.Screen>)
-        : (<> 
-          <Stack.Screen name="Sign In">
-            {() => <SignInPage login={login} errors={errors}/>}
-          </Stack.Screen>
-          <Stack.Screen name="Create a New Account">
-            {() => <SignUpPage signUp={signUp} errors={errors} navigation={navigation}/>}
-          </Stack.Screen> 
-          </>)
-      }
-      </Stack.Navigator>
-    </NavigationContainer>
-
-  );
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //   {user.id
+    //     ? (<Stack.Screen name="HomePage">
+    //           {() => <HomePage logOut={logOut} refreshToken={refreshToken}/>}
+    //         </Stack.Screen>)
+    //     : (<> 
+    //       <Stack.Screen name="Sign In">
+    //         {() => <SignInPage login={login} errors={errors}/>}
+    //       </Stack.Screen>
+    //       <Stack.Screen name="Create a New Account">
+    //         {() => <SignUpPage signUp={signUp} errors={errors}/>}
+    //       </Stack.Screen> 
+    //       </>)
+    //   }
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+  // );
 }
 
 const styles = StyleSheet.create({
