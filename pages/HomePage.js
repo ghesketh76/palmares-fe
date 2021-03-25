@@ -4,6 +4,7 @@ import StravaActivities from '../components/StravaActivities'
 import DailyCard from '../components/DailyCard'
 import DailyGoal from '../components/DailyGoal'
 import GoalAchieved from '../components/GoalAchieved'
+import FailedGoal from '../components/FailedGoal'
 
 
 
@@ -17,8 +18,10 @@ export default function HomePage(props) {
     
     const [activities, setActivities] = useState([])
     const [dailyGoal, setDailyGoal] = useState({})
-    const [goalAchieved, setGoalAchieved] = useState(false)
+    const [goalCompared, setGoalCompared] = useState(false)
     const [postedActivity, setPostedActivity] = useState({})
+    const [goalAchieved, setGoalAchieved] = useState(false)
+    
 
     useEffect(() => {
         fetch(refreshURL, {
@@ -42,17 +45,22 @@ export default function HomePage(props) {
     const postActivity = (workout) => {
         setPostedActivity(workout)
         if(parseInt(dailyGoal.distance) <= (postedActivity.distance / 1609) || parseInt(dailyGoal.duration) <= (postedActivity.elapsed_time / 60)){
-            setGoalAchieved(true)
-        } else { null }
+            handleToggle()
+            
+        } else { setGoalCompared(true) }
     }
 
-    
+    const handleToggle = () => {
+        setGoalCompared(true)
+        setGoalAchieved(true)
+    }
 
     return (
         <SafeAreaView style={styles.homePageContainer}>
             <Button title="Logout" onPress={props.logOut}/>
-            { goalAchieved            
-            ? <GoalAchieved setGoalAchieved={setGoalAchieved}/>
+            
+            { goalCompared            
+            ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved}/>
             : (<>
                 <DailyGoal dailyGoal={dailyGoal} createDailyGoal={createDailyGoal} setDailyGoal={setDailyGoal}/>
                 <View>
