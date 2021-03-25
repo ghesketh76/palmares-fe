@@ -79,7 +79,7 @@ export default function SignUpPage(props) {
             <TouchableOpacity style={styles.loginBtn} onPress={handleSignUp}>
                 <Text style={styles.loginText}>Create a New Account</Text>
             </TouchableOpacity>
-            <Button title="I already have an account" onPress={() => props.navigation.navigate('Sign In')}/>
+            <Button title="I already have an account" onPress={() => props.setLoginToggle(true)}/>
         </View>
     )
 }

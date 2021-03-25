@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 
 
-export default function DailyCard({activities}) {
+export default function DailyCard({activities, postActivity}) {
 
     const [todaysActivity, setTodaysActivity] = useState({})
 
@@ -15,7 +15,9 @@ export default function DailyCard({activities}) {
             setTodaysActivity(workout)
         }
     
-    
+    const handleSubmit = () => {
+        postActivity(todaysActivity)
+    }
     
 
     if(todaysActivity.id){
@@ -35,6 +37,7 @@ export default function DailyCard({activities}) {
             <Text style={styles.cardText}>Average HR: {heartRate}</Text>
             {todaysActivity.average_watts ? <Text style={styles.cardText}>Average Power: {power} W</Text> : null}
             <Text style={styles.cardText}>Completed on: {date}</Text>
+            <Button title="Submit this workout" onPress={handleSubmit}/>
         </View> 
        )
    } else{

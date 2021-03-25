@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, Modal, TextInput, TouchableOpacity, Button ,StyleSheet} from 'react-native'
 
-export default function DailyGoal({dailyGoal, createDailyGoal}) {
+export default function DailyGoal({dailyGoal, createDailyGoal, setDailyGoal}) {
 
     const [modalVisible, setModalVisible] = useState(false)
     const [workoutType, setWorkoutType] = useState('')
@@ -61,6 +61,7 @@ export default function DailyGoal({dailyGoal, createDailyGoal}) {
                             <Text>Workout Duration: {dailyGoal.duration} mins</Text> 
                             <Text>Workout Distance: {dailyGoal.distance} miles</Text>
                             <Text>You can achieve it!</Text>
+                            <Button title="Reset Goal" onPress={() => setDailyGoal(!dailyGoal)}/>
                         </View>
                     ) 
                     : <Button title="Create a goal for today" onPress={() => setModalVisible(!modalVisible)}/>

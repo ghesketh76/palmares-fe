@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, Button, StyleSheet, SafeAreaView } from 'react-native'
 import StravaActivities from '../components/StravaActivities'
 import DailyCard from '../components/DailyCard'
 import DailyGoal from '../components/DailyGoal'
+import GoalAchieved from '../components/GoalAchieved'
 
 
 
@@ -17,6 +18,7 @@ export default function HomePage(props) {
     const [activities, setActivities] = useState([])
     const [dailyGoal, setDailyGoal] = useState({})
     const [goalAchieved, setGoalAchieved] = useState(false)
+    const [postedActivity, setPostedActivity] = useState({})
 
     useEffect(() => {
         fetch(refreshURL, {
@@ -37,20 +39,32 @@ export default function HomePage(props) {
         setDailyGoal(goal)
     }
 
+    const postActivity = (workout) => {
+        setPostedActivity(workout)
+        if(parseInt(dailyGoal.distance) <= (postedActivity.distance / 1609) || parseInt(dailyGoal.duration) <= (postedActivity.elapsed_time / 60)){
+            setGoalAchieved(true)
+        } else { null }
+    }
+
     
 
     return (
-        <View style={styles.homePageContainer}>
+        <SafeAreaView style={styles.homePageContainer}>
             <Button title="Logout" onPress={props.logOut}/>
-            <DailyGoal dailyGoal={dailyGoal} createDailyGoal={createDailyGoal}/>
-            <View>
-                <Text>Todays Activity:</Text>
-                <DailyCard activities={activities}/>
-                
-            </View>
-            <Text>Past Activity</Text>
-            <StravaActivities activities={activities}/>
-        </View>
+            { goalAchieved            
+            ? <GoalAchieved setGoalAchieved={setGoalAchieved}/>
+            : (<>
+                <DailyGoal dailyGoal={dailyGoal} createDailyGoal={createDailyGoal} setDailyGoal={setDailyGoal}/>
+                <View>
+                    <Text>Todays Activity:</Text>
+                        <DailyCard activities={activities} postActivity={postActivity}/>  
+                </View>
+                <Text>Past Activity</Text>
+                <StravaActivities activities={activities}/>
+                </>
+            )
+            }
+        </SafeAreaView>
     )
 }
 
