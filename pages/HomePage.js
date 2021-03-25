@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import StravaActivities from '../components/StravaActivities'
+import DailyCard from '../components/DailyCard'
+import DailyGoal from '../components/DailyGoal'
+
 
 
 
@@ -12,41 +15,48 @@ export default function HomePage(props) {
     const activityURL = 'https://www.strava.com/api/v3/athlete/activities?access_token='
     
     const [activities, setActivities] = useState([])
+    const [dailyGoal, setDailyGoal] = useState({})
+    const [goalAchieved, setGoalAchieved] = useState(false)
 
     useEffect(() => {
         fetch(refreshURL, {
         method: 'POST'
         }).then(response => response.json())
         .then(result => getActivities(result.access_token))
-    }, [refreshURL])
+    },[refreshURL])
 
     const getActivities = (access) => {
         fetch(`${activityURL}${access}`)
         .then(response => response.json())
-        .then(data => setActivities(data))
-    }
-    
-    
-    const handlePress = () => {
-        console.log(props.refreshToken)
+        .then(data => {
+            !data.errors && setActivities(data) 
+            })
     }
 
-    const handleLogout = () => {
-        props.logOut()
+    const createDailyGoal = (goal) => {
+        setDailyGoal(goal)
     }
+
+    
 
     return (
-        <View>
+        <View style={styles.homePageContainer}>
+            <Button title="Logout" onPress={props.logOut}/>
+            <DailyGoal dailyGoal={dailyGoal} createDailyGoal={createDailyGoal}/>
             <View>
-                <Text style={styles.goalContainer}>Daily Goal</Text>
+                <Text>Todays Activity:</Text>
+                <DailyCard activities={activities}/>
+                
             </View>
-            <StravaActivities />
+            <Text>Past Activity</Text>
+            <StravaActivities activities={activities}/>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    goalContainer: {
-        backgroundColor: 'blue'
-    }
+    homePageContainer: {
+        flex: 1
+    },
+
 })

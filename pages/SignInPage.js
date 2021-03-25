@@ -30,6 +30,7 @@ export default function SignInPage(props) {
                 <TextInput 
                     style={styles.inputView}
                     placeholder="Password"
+                    secureTextEntry={true}
                     onChangeText={password => setPassword(password)}
                 />
             </View>
