@@ -21,7 +21,7 @@ export default function SignInPage(props) {
             <Text style={styles.logo}>palmares.</Text>
                 <View style={styles.inputView}>
                     <TextInput 
-                        style={styles.inputView}
+                        style={styles.textView}
                         placeholder="Username"
                         onChangeText={username => setUsername(username)}
                         autoCapitalize='none'
@@ -29,7 +29,7 @@ export default function SignInPage(props) {
                 </View>
                 <View style={styles.inputView}>
                     <TextInput 
-                        style={styles.inputView}
+                        style={styles.textView}
                         placeholder="Password"
                         secureTextEntry={true}
                         onChangeText={password => setPassword(password)}
@@ -73,7 +73,24 @@ const styles = StyleSheet.create({
         marginBottom: 20,
      
         alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },    
+    textView: {
+        backgroundColor: "white",
+        borderRadius: 30,
+        width: "80%",
+        height: 45,
+        marginBottom: 20,
+     
+        alignItems: "center",
+        
+    }, 
     textInput: {
         height: 50,
         textAlign: 'center',
@@ -85,6 +102,7 @@ const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 50,
         fontSize: 30,
+        
     },
     loginBtn: {
         width: "80%",
@@ -94,12 +112,26 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 40,
         backgroundColor: "#FF1493",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     logo: {
         color: 'white',
         fontSize: 60,
         fontWeight: 'bold',
-        paddingBottom: 70
+        paddingBottom: 70,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     newAccountBtn: {
         width: "80%",
@@ -109,6 +141,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 20,
         backgroundColor: "#9c2f6a",
-    }
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+    },
+    loginText: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 20
+    },
 
 })

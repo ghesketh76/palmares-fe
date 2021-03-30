@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
         height: 200,
         backgroundColor: "#b207ff",
         alignItems: "center",
+        
         // justifyContent: "center",    
     },
     headerText: {
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
     goalCard: {
         width: '85%',
         height: 170,
-        backgroundColor: 'orange',
+        backgroundColor: '#d4d4d4',
         borderRadius: 8,
         margin: 10,
         padding: 5,

@@ -12,7 +12,7 @@ export default function StravaActivities({activities}) {
      }
 
     return (
-        <ScrollView horizontal={true} style={styles.activityContainer}>     
+        <ScrollView  style={styles.activityContainer}>     
             {makeCards()}
         </ScrollView>
     )

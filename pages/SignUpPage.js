@@ -107,6 +107,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
      
         alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },    
     textInput: {
         height: 50,
@@ -119,7 +126,14 @@ const styles = StyleSheet.create({
         color: 'white',
         margin: 20,
         fontSize: 30,
-        paddingTop: 20
+        paddingTop: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     loginBtn: {
         width: "80%",
@@ -129,6 +143,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 40,
         backgroundColor: "#FF1493",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     newAccountBtn: {
         width: "80%",
@@ -138,7 +159,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         margin: 20,
         backgroundColor: "#9c2f6a",
-    }
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+    },
+    loginText: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 20
+    },
 
 
 })

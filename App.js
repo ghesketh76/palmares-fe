@@ -98,7 +98,7 @@ export default function App() {
 
 
    if(user.id){
-    return <HomePage logOut={logOut} refreshToken={refreshToken} user={user}/>
+    return <TabContainer logOut={logOut} refreshToken={refreshToken} user={user}/>
    } else if (loginToggle){
      return <SignInPage login={login} errors={errors} setLoginToggle={setLoginToggle}/>
    } else {
