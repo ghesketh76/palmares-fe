@@ -5,6 +5,8 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomePage from './pages/HomePage';
+import TabContainer from './pages/TabContainer'
+import { useReducer } from 'react';
 
 
 
@@ -48,13 +50,13 @@ export default function App() {
     getData()
   },[])
   
-  const signUp = () => {
+  const signUp = (newUser) => {
     fetch(usersURL, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({user: {username, password, first_name, last_name, email, age}})
+      body: JSON.stringify({user: newUser})
     })
       .then(response => response.json())
       .then(data => {
@@ -96,7 +98,7 @@ export default function App() {
 
 
    if(user.id){
-    return <HomePage logOut={logOut} refreshToken={refreshToken}/>
+    return <TabContainer logOut={logOut} refreshToken={refreshToken} user={user}/>
    } else if (loginToggle){
      return <SignInPage login={login} errors={errors} setLoginToggle={setLoginToggle}/>
    } else {
@@ -104,24 +106,7 @@ export default function App() {
    }
   
 
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //   {user.id
-    //     ? (<Stack.Screen name="HomePage">
-    //           {() => <HomePage logOut={logOut} refreshToken={refreshToken}/>}
-    //         </Stack.Screen>)
-    //     : (<> 
-    //       <Stack.Screen name="Sign In">
-    //         {() => <SignInPage login={login} errors={errors}/>}
-    //       </Stack.Screen>
-    //       <Stack.Screen name="Create a New Account">
-    //         {() => <SignUpPage signUp={signUp} errors={errors}/>}
-    //       </Stack.Screen> 
-    //       </>)
-    //   }
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-  // );
+  
 }
 
 const styles = StyleSheet.create({

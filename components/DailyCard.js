@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
 
 
 export default function DailyCard({activities, postActivity}) {
@@ -11,7 +11,7 @@ export default function DailyCard({activities, postActivity}) {
     
     
       const getToday = () => {
-            const workout = activities.find(activity => activity.start_date_local.slice(0,10) === '2021-03-24') 
+            const workout = activities.find(activity => activity.start_date_local.slice(0,10) === '2021-03-28') 
             setTodaysActivity(workout)
         }
     
@@ -37,14 +37,26 @@ export default function DailyCard({activities, postActivity}) {
             <Text style={styles.cardText}>Average HR: {heartRate}</Text>
             {todaysActivity.average_watts ? <Text style={styles.cardText}>Average Power: {power} W</Text> : null}
             <Text style={styles.cardText}>Completed on: {date}</Text>
-            <Button title="Submit this workout" onPress={handleSubmit}/>
+            <TouchableOpacity
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={handleSubmit}
+                        >
+                            <Text style={styles.goalButtonText}>Submit</Text>
+            </TouchableOpacity>
+            {/* <Button title="Submit this workout" onPress={handleSubmit}/> */}
         </View> 
        )
    } else{
        return (
         <View style={styles.card}>
-            <Text>No Workouts Today yet!</Text>
-            <Button title="Refresh" onPress={getToday}/>
+            <Text style={styles.promptText}>No Workouts Today yet!</Text>
+            <TouchableOpacity
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={getToday}
+                        >
+                            <Text style={styles.goalButtonText}>Check for Activity</Text>
+            </TouchableOpacity>
+            {/* <Button title="Refresh" onPress={getToday}/> */}
         </View>
        )
    }
@@ -52,15 +64,42 @@ export default function DailyCard({activities, postActivity}) {
 
 const styles = StyleSheet.create({
     card: {
-        width: '40%',
-        height: 100,
-        backgroundColor: 'orange',
+        width: '85%',
+        height: 250,
+        backgroundColor: '#d4d4d4',
         borderRadius: 8,
         margin: 10,
         padding: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
     },
     cardText: {
-        fontSize: 10,
+        fontSize: 17,
+        padding: 1,
+        textAlign: 'center'
+    },
+    nameText: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        margin: 10,
+        elevation: 2
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+    },
+    goalButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 20
+    },
+    promptText: {
+        textAlign: 'center',
+        fontSize: 30
     }
 })

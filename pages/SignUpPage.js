@@ -17,9 +17,11 @@ export default function SignUpPage(props) {
    
 
     const handleSignUp = () => {
-        props.signUp({user: {username, password, first_name, last_name, email, age}})
+        const user = {username, password, first_name, last_name, email, age}
+        props.signUp(user)
     }
 
+    
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Create a New Account</Text>
@@ -28,6 +30,7 @@ export default function SignUpPage(props) {
                     style={styles.textInput} 
                     placeholder='Username' 
                     // value={username} 
+                    autoCapitalize='none'
                     onChangeText={username => setUsername(username)}
                 />
             </View>
@@ -36,6 +39,7 @@ export default function SignUpPage(props) {
                     style={styles.textInput} 
                     placeholder='Password' 
                     // value={password} 
+                    secureTextEntry={true}
                     onChangeText={password => setPassword(password)}
                 />
             </View>
@@ -79,7 +83,10 @@ export default function SignUpPage(props) {
             <TouchableOpacity style={styles.loginBtn} onPress={handleSignUp}>
                 <Text style={styles.loginText}>Create a New Account</Text>
             </TouchableOpacity>
-            <Button title="I already have an account" onPress={() => props.setLoginToggle(true)}/>
+            <TouchableOpacity style={styles.newAccountBtn} onPress={() => props.setLoginToggle(true)}>
+                    <Text style={styles.loginText}>I Already Have an Account</Text>
+                </TouchableOpacity>
+            {/* <Button title="I already have an account" onPress={() => props.setLoginToggle(true)}/> */}
         </View>
     )
 }
@@ -100,6 +107,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
      
         alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },    
     textInput: {
         height: 50,
@@ -110,8 +124,16 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: 'white',
-        marginBottom: 50,
+        margin: 20,
         fontSize: 30,
+        paddingTop: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     loginBtn: {
         width: "80%",
@@ -121,6 +143,34 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 40,
         backgroundColor: "#FF1493",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+    },
+    newAccountBtn: {
+        width: "80%",
+        borderRadius: 25,
+        height: 50,
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 20,
+        backgroundColor: "#9c2f6a",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+    },
+    loginText: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 20
     },
 
 
