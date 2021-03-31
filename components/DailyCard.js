@@ -65,29 +65,38 @@ export default function DailyCard({activities, postActivity}) {
 const styles = StyleSheet.create({
     card: {
         width: '85%',
-        height: 250,
-        backgroundColor: '#d4d4d4',
+        height: 270,
+        backgroundColor: '#f2f2f2',
         borderRadius: 8,
-        margin: 10,
+        marginTop: 50,
         padding: 5,
         justifyContent: 'center',
         
     },
     cardText: {
         fontSize: 17,
-        padding: 1,
+        padding: 2,
         textAlign: 'center'
     },
     nameText: {
         textAlign: 'center',
         fontSize: 20,
+        padding: 2,
         fontWeight: 'bold'
     },
     button: {
         borderRadius: 20,
         padding: 10,
+        marginTop: 20,
         margin: 10,
-        elevation: 2
+        elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     buttonClose: {
         backgroundColor: "#2196F3",

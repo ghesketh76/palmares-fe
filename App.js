@@ -13,7 +13,7 @@ import { useReducer } from 'react';
 const usersURL = 'https://palmares-be.herokuapp.com/users'
 const loginURL = 'https://palmares-be.herokuapp.com/login'
 const profileURL = 'https://palmares-be.herokuapp.com/profile'
-
+const scoresURL = 'https://palmares-be.herokuapp.com/non_user_scores'
 export default function App() {
 
   const [errors, setErrors] = useState([])
@@ -21,6 +21,8 @@ export default function App() {
   const [refreshToken, setRefreshToken] = useState('')
   const [user, setUser] = useState({})
   const [loginToggle, setLoginToggle] = useState(true)
+  const [userScore, setUserScore] = useState({})
+  const [allScores, setAllScores] = useState([])
   
   const getData = async () => {
     try{
@@ -49,6 +51,22 @@ export default function App() {
   useEffect(() => {
     getData()
   },[])
+
+  // useEffect(() => {
+  //   console.log(authToken)
+  //   if(authToken){
+
+  //     fetch(scoresURL, {
+  //       method: 'GET',
+  //       headers: {
+  //         "Authorization": `Bearer ${authToken}`,
+  //         'Content-type': 'application/json'
+  //       }
+  //     }).then(response => response.json())
+  //       .then(scores => setAllScores(scores))
+  //       .catch(console.error)
+  //   }
+  // },[authToken])
   
   const signUp = (newUser) => {
     fetch(usersURL, {
@@ -86,6 +104,7 @@ export default function App() {
           setUser(data.user)
           setAuthToken(data.token)
           setRefreshToken(data.refresh_token.refresh_token)
+          setUserScore(data.score)
         }
       })
   }
@@ -97,8 +116,8 @@ export default function App() {
   }
 
 
-   if(user.id){
-    return <TabContainer logOut={logOut} refreshToken={refreshToken} user={user}/>
+   if(user){
+    return <TabContainer logOut={logOut} refreshToken={refreshToken} user={user} authToken={authToken} userScore={userScore}/>
    } else if (loginToggle){
      return <SignInPage login={login} errors={errors} setLoginToggle={setLoginToggle}/>
    } else {

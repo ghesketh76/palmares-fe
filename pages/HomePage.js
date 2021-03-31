@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, StyleSheet, SafeAreaView } from 'react-native'
-
-
-import StravaActivities from '../components/StravaActivities'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import DailyCard from '../components/DailyCard'
 import DailyGoal from '../components/DailyGoal'
 import GoalAchieved from '../components/GoalAchieved'
 
 
-
-
-
-export default function HomePage({activities, user, logOut}) {
+export default function HomePage({activities, user}) {
 
     const [dailyGoal, setDailyGoal] = useState({})
     const [goalCompared, setGoalCompared] = useState(false)
@@ -25,9 +19,6 @@ export default function HomePage({activities, user, logOut}) {
 
     const postActivity = (workout) => {
         setPostedActivity(workout)
-        // if(parseInt(dailyGoal.distance) <= (postedActivity.distance / 1609) || parseInt(dailyGoal.duration) <= (postedActivity.elapsed_time / 60)){
-        //     handleToggle()
-        // } else { setGoalCompared(true) }
     }
 
     useEffect(() => {
@@ -40,14 +31,10 @@ export default function HomePage({activities, user, logOut}) {
         setGoalCompared(true)
         setGoalAchieved(true)
     }
-
-    
-
+ 
     return (
-        <SafeAreaView style={styles.homePageContainer}>
-            {/* <Button title="Logout" onPress={logOut}/> */}
-            
-            { goalCompared            
+        <SafeAreaView style={styles.homePageContainer}>   
+            { goalCompared  && postedActivity.distance          
             ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved} />
             : (
                 <View style={styles.goalContainer}>
@@ -56,10 +43,8 @@ export default function HomePage({activities, user, logOut}) {
                         <Text style={styles.activityHeader}>Today's Activity</Text>
                             <DailyCard activities={activities} postActivity={postActivity}/>  
                     </View>
-                    {/* <Text>Past Activity</Text> */}
-                    {/* <StravaActivities activities={activities}/> */}
                 </View>
-            )
+                )
             }
         </SafeAreaView>
     )
@@ -67,7 +52,8 @@ export default function HomePage({activities, user, logOut}) {
 
 const styles = StyleSheet.create({
     homePageContainer: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#b207ff"
     },
     goalContainer: {
         flex: 1,

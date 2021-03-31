@@ -61,8 +61,13 @@ export default function DailyGoal({dailyGoal, createDailyGoal, setDailyGoal}) {
                             <Text style={styles.goalText}>Workout Duration: {dailyGoal.duration} mins</Text> 
                             <Text style={styles.goalText}>Workout Distance: {dailyGoal.distance} miles</Text>
                             <Text style={styles.goalText}>You can achieve it!</Text>
-                           
-                            <Button title="Reset Goal" onPress={() => setDailyGoal(!dailyGoal)}/>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => setDailyGoal(!dailyGoal)}
+                                >
+                                <Text style={styles.textStyle}>Reset Goal</Text>
+                            </TouchableOpacity>
+                                {/* <Button title="Reset Goal" onPress={() => setDailyGoal(!dailyGoal)}/> */}
                         </View>
                     ) 
                     : (
@@ -107,7 +112,15 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 20,
         padding: 10,
-        elevation: 2
+        margin: 10,
+        elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     buttonOpen: {
         backgroundColor: "#F194FF",
@@ -118,7 +131,8 @@ const styles = StyleSheet.create({
     textStyle: {
         color: "white",
         fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: 20
     },
     modalText: {
         marginBottom: 15,
@@ -155,7 +169,8 @@ const styles = StyleSheet.create({
         height: 200,
         backgroundColor: "#b207ff",
         alignItems: "center",
-        
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
         // justifyContent: "center",    
     },
     headerText: {
@@ -175,8 +190,15 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        marginTop: 50,
-        width: 80
+        marginTop: 80,
+        width: 80,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     plusButtonText: {
         color: "white",
@@ -186,10 +208,10 @@ const styles = StyleSheet.create({
     },
     goalCard: {
         width: '85%',
-        height: 170,
-        backgroundColor: '#d4d4d4',
+        height: 220,
+        backgroundColor: '#f2f2f2',
         borderRadius: 8,
-        margin: 10,
+        marginTop: 25,
         padding: 5,
         justifyContent: 'center',
         shadowColor: "#000",

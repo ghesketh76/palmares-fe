@@ -27,13 +27,21 @@ export default function StravaCard({activity}) {
 
 const styles = StyleSheet.create({
     card: {
-        width: 300,
+        width: '90%',
         height: 180,
-        backgroundColor: 'orange',
+        backgroundColor: '#f2f2f2',
         borderRadius: 8,
         marginHorizontal: 20,
         padding: 5,
-        
+        alignItems: 'center',
+        margin: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     cardText: {
         fontSize: 17,
