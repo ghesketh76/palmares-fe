@@ -76,12 +76,14 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: 17,
         padding: 2,
-        textAlign: 'center'
+        paddingLeft: 15,
+        textAlign: 'left'
     },
     nameText: {
         textAlign: 'center',
         fontSize: 20,
         padding: 2,
+        paddingBottom: 10,
         fontWeight: 'bold'
     },
     button: {
