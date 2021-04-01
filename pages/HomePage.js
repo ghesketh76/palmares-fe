@@ -5,7 +5,7 @@ import DailyGoal from '../components/DailyGoal'
 import GoalAchieved from '../components/GoalAchieved'
 
 
-export default function HomePage({activities, user}) {
+export default function HomePage({activities, user, updateScore, userScore}) {
 
     const [dailyGoal, setDailyGoal] = useState({})
     const [goalCompared, setGoalCompared] = useState(false)
@@ -30,12 +30,19 @@ export default function HomePage({activities, user}) {
     const handleToggle = () => {
         setGoalCompared(true)
         setGoalAchieved(true)
+        handleUpdate()
+    }
+
+    const handleUpdate = () => {
+        let newScore = Object.assign({}, userScore)
+        newScore.score = userScore.score + 100 
+        updateScore(newScore)
     }
  
     return (
         <View style={styles.homePageContainer}>   
             { goalCompared  && postedActivity.distance          
-            ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved} />
+            ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved} setPostedActivity={setPostedActivity}/>
             : (
                 <SafeAreaView style={styles.goalContainer}>
                     <DailyGoal  dailyGoal={dailyGoal} createDailyGoal={createDailyGoal} setDailyGoal={setDailyGoal}/>

@@ -3,7 +3,14 @@ import {View, Text, StyleSheet} from 'react-native'
 
 export default function BoardItem({listNum, score}) {
     return (
-        <View style={styles.itemContainer}>
+        <View style={{flexDirection: 'row', 
+                      justifyContent: 'space-between', 
+                      backgroundColor: listNum % 2 == 0 ? '#d9d7d7' : 'white',
+                      borderRadius: 20,
+                      padding: 5,
+                      paddingLeft: 20,
+                      paddingRight: 20
+                      }}>
             <Text style={styles.listText}>{listNum}.   {score.user.first_name}</Text>
             <Text style={styles.scoreText}>{score.score}</Text>
         </View>
@@ -11,13 +18,7 @@ export default function BoardItem({listNum, score}) {
 }
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        // backgroundColor: '#b207ff',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
     listText: {
-        // backgroundColor: '#b207ff',
         fontSize: 30,
         color: 'black',
         paddingRight: 90,

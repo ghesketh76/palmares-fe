@@ -71,6 +71,13 @@ const styles = StyleSheet.create({
         marginTop: 50,
         padding: 5,
         justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     cardText: {
         fontSize: 20,

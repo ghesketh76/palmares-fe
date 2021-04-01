@@ -11,8 +11,8 @@ export default function DailyCard({activities, postActivity}) {
     
     
       const getToday = () => {
-            const workout = activities.find(activity => activity.start_date_local.slice(0,10) === '2021-03-28') 
-            setTodaysActivity(workout)
+            const workout = activities.find(activity => activity.start_date_local.slice(0,10) === dateToday) 
+            workout ? setTodaysActivity(workout) : null
         }
     
     const handleSubmit = () => {
