@@ -224,13 +224,15 @@ const styles = StyleSheet.create({
     },
     goalText: {
         fontSize: 17,
-        padding: 1,
-        textAlign: 'center'
+        padding: 2,
+        paddingLeft: 15,
+        textAlign: 'left'
     },
     goalTextHeader:{
         fontSize: 20,
         fontWeight: 'bold',
         paddingTop: 2,
+        paddingBottom: 10,
         padding: 1,
         textAlign: 'center'
     },
