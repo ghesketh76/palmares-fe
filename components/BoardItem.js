@@ -12,19 +12,33 @@ export default function BoardItem({listNum, score}) {
 
 const styles = StyleSheet.create({
     itemContainer: {
-        backgroundColor: '#b207ff',
+        // backgroundColor: '#b207ff',
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     listText: {
-        backgroundColor: '#b207ff',
+        // backgroundColor: '#b207ff',
         fontSize: 30,
-        color: 'white',
-        paddingRight: 50
+        color: 'black',
+        paddingRight: 90,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     },
     scoreText: {
         textAlign: 'right',
         fontSize: 30,
-        color: 'white'
+        color: 'black',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     }
 })

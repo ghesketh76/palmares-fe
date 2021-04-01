@@ -33,7 +33,8 @@ export default function GoalAchieved({setGoalCompared, goalAchieved}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column"
+        flexDirection: "column",
+        backgroundColor: 'black'
     },
     image: {
         flex: 1,

@@ -30,9 +30,11 @@ export default function Leaderboard({leaderboardScores}) {
 
     return (
         <SafeAreaView style={styles.pageContainer}>
-            <Text style={styles.activityHeader}>Leaderboard</Text>
-            <View style={styles.listContainer}>
-               {makeLeaderBoardList()}
+                <Text style={styles.activityHeader}>Leaderboard</Text>
+            <View style={styles.boardContainer}>
+                <ScrollView style={styles.listContainer}>
+                {makeLeaderBoardList()}
+                </ScrollView>
             </View>
         </SafeAreaView>
     )
@@ -45,10 +47,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     activityHeader: {
-        color: 'white',
+        color: '#f2f2f2',
         fontSize: 30,
         fontWeight: 'bold',
         paddingTop: 10,
+        paddingBottom: 30,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -59,7 +62,24 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         paddingTop: 20,
-        
 
+    },
+    boardContainer: {
+        backgroundColor: 'white',
+        width: '90%',
+        height: '80%',
+        // backgroundColor: '#f2f2f2',
+        borderRadius: 8,
+        marginHorizontal: 20,
+        padding: 5,
+        alignItems: 'center',
+        margin: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
     }
 })

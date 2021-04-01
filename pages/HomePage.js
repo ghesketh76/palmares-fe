@@ -33,20 +33,20 @@ export default function HomePage({activities, user}) {
     }
  
     return (
-        <SafeAreaView style={styles.homePageContainer}>   
+        <View style={styles.homePageContainer}>   
             { goalCompared  && postedActivity.distance          
             ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved} />
             : (
-                <View style={styles.goalContainer}>
+                <SafeAreaView style={styles.goalContainer}>
                     <DailyGoal  dailyGoal={dailyGoal} createDailyGoal={createDailyGoal} setDailyGoal={setDailyGoal}/>
                     <View style={styles.dailyCard}>
                         <Text style={styles.activityHeader}>Today's Activity</Text>
                             <DailyCard activities={activities} postActivity={postActivity}/>  
                     </View>
-                </View>
+                </SafeAreaView>
                 )
             }
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
     },
     goalContainer: {
         flex: 1,
-        backgroundColor: "#61068a"
+        backgroundColor: "#61068a",
+        marginTop: 50
     },
     dailyCard: {
         flex: 1.25,
