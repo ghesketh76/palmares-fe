@@ -36,7 +36,7 @@ export default function TabContainer(props) {
   },[refreshURL])
 
   useEffect(() => {
-    console.log(props.authToken)
+    
     fetch(scoresURL, {
       method: 'GET',
       headers: {
@@ -45,7 +45,7 @@ export default function TabContainer(props) {
       }
     }).then(response => response.json())
       .then(scores => setAllScores(scores))
-  },[])
+  },[activities])
 
   useEffect(() => {
     setLeaderboardScores([...allScores, {...props.userScore, user: props.user}])

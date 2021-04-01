@@ -6,6 +6,9 @@ import StravaCard from './StravaCard'
 
 export default function StravaActivities({activities}) {
 
+    const [totalDistance, setTotalDistance] = useState('')
+    const [totalTime, setTotalTime] = useState('')
+
     const makeCards = () => {
         return activities.map((activity, i) => <StravaCard activity={activity} key={i}/>)
      }

@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
     card: {
         width: '85%',
         height: 270,
-        backgroundColor: '#d4d4d4',
+        backgroundColor: '#f2f2f2',
         borderRadius: 8,
         marginTop: 50,
         padding: 5,
         justifyContent: 'center',
     },
     cardText: {
-        fontSize: 17,
+        fontSize: 20,
         padding: 5,
         textAlign: 'center'
     },

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import { View, Text, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
+import BoardItem from '../components/BoardItem'
 
 export default function Leaderboard({leaderboardScores}) {
 
@@ -24,21 +24,15 @@ export default function Leaderboard({leaderboardScores}) {
         setSortedScores(sorting)
     }, [leaderboardScores])
 
+    const makeLeaderBoardList = () => {
+        return sortedScores.map((score, i) => <BoardItem score={score} listNum={i + 1} key={i + 1}/>)
+    }
+
     return (
         <SafeAreaView style={styles.pageContainer}>
             <Text style={styles.activityHeader}>Leaderboard</Text>
-            <View>
-               {/* {
-                   leaderboardScores.map((l, i) => (
-                       <ListItem key={i} bottomDivider style={}>
-                           <ListItem.Content>
-                               <ListItem.Title>{l.user.username}</ListItem.Title>
-                               <ListItem.Subtitle>{l.score}</ListItem.Subtitle>
-                           </ListItem.Content>
-                       </ListItem>
-                   ))
-               } */}
-               
+            <View style={styles.listContainer}>
+               {makeLeaderBoardList()}
             </View>
         </SafeAreaView>
     )
@@ -62,5 +56,10 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
+    },
+    listContainer: {
+        paddingTop: 20,
+        
+
     }
 })
