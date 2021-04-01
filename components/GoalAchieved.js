@@ -1,10 +1,15 @@
 import React from 'react'
 import { View, Text, Button, Modal, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 
-export default function GoalAchieved({setGoalCompared, goalAchieved}) {
+export default function GoalAchieved({setGoalCompared, goalAchieved, setPostedActivity}) {
 
 
    const image = {uri: 'https://i.redd.it/z57qrwt3nh001.png'}
+
+   const handlePress = () => {
+       setGoalCompared(false)
+       setPostedActivity({})
+   }
 
     return (
         
@@ -17,7 +22,7 @@ export default function GoalAchieved({setGoalCompared, goalAchieved}) {
                             }
                             <TouchableOpacity
                                 style={[styles.button, styles.buttonClose]}
-                                onPress={() => setGoalCompared(false)}
+                                onPress={handlePress}
                                 >
                                 <Text style={styles.buttonTextStyle}>Return</Text>
                             </TouchableOpacity>
@@ -33,7 +38,8 @@ export default function GoalAchieved({setGoalCompared, goalAchieved}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column"
+        flexDirection: "column",
+        backgroundColor: 'black'
     },
     image: {
         flex: 1,

@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomePage from './pages/HomePage';
 import TabContainer from './pages/TabContainer'
 import { useReducer } from 'react';
-
+import { LogBox } from 'react-native';
 
 
 const usersURL = 'https://palmares-be.herokuapp.com/users'
@@ -15,6 +15,8 @@ const loginURL = 'https://palmares-be.herokuapp.com/login'
 const profileURL = 'https://palmares-be.herokuapp.com/profile'
 const scoresURL = 'https://palmares-be.herokuapp.com/non_user_scores'
 export default function App() {
+
+  LogBox.ignoreLogs(['Warning: ...'])
 
   const [errors, setErrors] = useState([])
   const [authToken, setAuthToken] = useState('')
@@ -44,6 +46,7 @@ export default function App() {
       .then(data => {
         setUser(data.user)
         setRefreshToken(data.refresh_token.refresh_token)
+        setUserScore(data.score)
       })
       
   }
@@ -51,6 +54,10 @@ export default function App() {
   useEffect(() => {
     getData()
   },[])
+
+  const updateScore = (newScore) => {
+    setUserScore(newScore)
+  }
 
   // useEffect(() => {
   //   console.log(authToken)
@@ -117,7 +124,14 @@ export default function App() {
 
 
    if(user){
-    return <TabContainer logOut={logOut} refreshToken={refreshToken} user={user} authToken={authToken} userScore={userScore}/>
+    return <TabContainer 
+              logOut={logOut} 
+              refreshToken={refreshToken} 
+              user={user} 
+              authToken={authToken} 
+              userScore={userScore}
+              updateScore={updateScore}
+              />
    } else if (loginToggle){
      return <SignInPage login={login} errors={errors} setLoginToggle={setLoginToggle}/>
    } else {

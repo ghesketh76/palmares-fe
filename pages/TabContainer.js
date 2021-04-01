@@ -49,7 +49,7 @@ export default function TabContainer(props) {
 
   useEffect(() => {
     setLeaderboardScores([...allScores, {...props.userScore, user: props.user}])
-  }, [allScores])
+  }, [allScores, props.userScore])
 
   const getActivities = (access) => {
       fetch(`${activityURL}${access}`)
@@ -83,7 +83,13 @@ export default function TabContainer(props) {
         }}
       >
         <Tab.Screen name="Home">
-            {() => <HomePage  refreshToken={props.refreshToken} user={props.user} activities={activities}/>}
+            {() => <HomePage  
+                      refreshToken={props.refreshToken} 
+                      user={props.user} 
+                      activities={activities} 
+                      updateScore={props.updateScore}
+                      userScore={props.userScore}
+                      />}
         </Tab.Screen>
         <Tab.Screen name="Activities">
             {() => <StravaActivities  refreshToken={props.refreshToken} user={props.user} activities={activities}/>}

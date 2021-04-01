@@ -5,7 +5,7 @@ import DailyGoal from '../components/DailyGoal'
 import GoalAchieved from '../components/GoalAchieved'
 
 
-export default function HomePage({activities, user}) {
+export default function HomePage({activities, user, updateScore, userScore}) {
 
     const [dailyGoal, setDailyGoal] = useState({})
     const [goalCompared, setGoalCompared] = useState(false)
@@ -30,23 +30,30 @@ export default function HomePage({activities, user}) {
     const handleToggle = () => {
         setGoalCompared(true)
         setGoalAchieved(true)
+        handleUpdate()
+    }
+
+    const handleUpdate = () => {
+        let newScore = Object.assign({}, userScore)
+        newScore.score = userScore.score + 100 
+        updateScore(newScore)
     }
  
     return (
-        <SafeAreaView style={styles.homePageContainer}>   
+        <View style={styles.homePageContainer}>   
             { goalCompared  && postedActivity.distance          
-            ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved} />
+            ? <GoalAchieved setGoalCompared={setGoalCompared} goalAchieved={goalAchieved} setPostedActivity={setPostedActivity}/>
             : (
-                <View style={styles.goalContainer}>
+                <SafeAreaView style={styles.goalContainer}>
                     <DailyGoal  dailyGoal={dailyGoal} createDailyGoal={createDailyGoal} setDailyGoal={setDailyGoal}/>
                     <View style={styles.dailyCard}>
                         <Text style={styles.activityHeader}>Today's Activity</Text>
                             <DailyCard activities={activities} postActivity={postActivity}/>  
                     </View>
-                </View>
+                </SafeAreaView>
                 )
             }
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -57,7 +64,8 @@ const styles = StyleSheet.create({
     },
     goalContainer: {
         flex: 1,
-        backgroundColor: "#61068a"
+        backgroundColor: "#61068a",
+        marginTop: 50
     },
     dailyCard: {
         flex: 1.25,
